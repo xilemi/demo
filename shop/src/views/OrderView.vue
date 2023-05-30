@@ -45,7 +45,7 @@ let getOrderList = async () => {
 };
 // 点击添加地址  跳转到地址页面   如果存在默认地址应该直接 显示默认地址
 const onAdd = () => {
-  router.push("/addressList");
+  router.push({ path: "/addressList", query: { returnUrl: route.fullPath } });
 };
 // 订单时间从购物车提交订单获取 通过路由带过来
 // let confirmOrder = async () => {
