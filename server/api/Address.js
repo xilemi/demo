@@ -37,6 +37,7 @@ router.post('/add', (req, res, next) => {
         })
       })
     } else {
+      // 添加默认地址 会清除存在的默认地址
       if (insertData.isDefault) {
         mysql.update(Address, {}, { $set: { isDefault: false }}, 1).then(() => {
           mysql.insert(Address, insertData).then(data => {
@@ -102,11 +103,16 @@ router.get('/list', (req, res, next) => {
  *    message: '更新地址接口'
  *  }
  */
-// 添加地址
+// 更新地址
 router.post('/update', (req, res, next) => {
   let updateData = req.body
   const addressid = updateData.addressid
   console.log(addressid)
+  if (updateData.isDefault) {
+    mysql.update(Address, {}, { $set: { isDefault: false } }, 1).then(() => {
+        console.log("先设置其他的为默认");
+    })
+  }
   mysql.update(Address, { addressid }, { $set: updateData }).then(data => {
     res.send({
       code: '200',

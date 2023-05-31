@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="carBox" v-if="isLogin">
     <van-swipe-cell v-for="item in cartList" :key="item.proid">
       <van-checkbox
         v-model="item.flag"
@@ -41,6 +41,22 @@
       <van-checkbox v-model="checkAll">全选</van-checkbox>
     </van-submit-bar>
   </div>
+  <div v-else>
+    <van-row style="margin-top: 50px">
+      <van-col span="24" style="text-align: center">
+        <van-button
+          type="primary"
+          @click="
+            router.replace({
+              path: '/login',
+              query: { returnUrl: route.fullPath },
+            })
+          "
+          >去登录</van-button
+        >
+      </van-col>
+    </van-row>
+  </div>
 </template>
 
 <script setup>
@@ -50,14 +66,13 @@ import {
   updateCheckOneApi,
   delCartApi,
 } from "@/api/cart.js";
-import { addOrderApi } from "@/api/order.js";
 import { computed, ref, watchEffect } from "vue";
 import { useUserStore } from "@/stores/user.js";
 import { storeToRefs } from "pinia";
 import { showFailToast, showSuccessToast } from "vant";
 import { useRouter, useRoute } from "vue-router";
 let User = useUserStore();
-let { userid } = storeToRefs(User);
+let { userid, isLogin } = storeToRefs(User);
 let cartList = ref(null);
 let router = useRouter();
 let route = useRoute();
@@ -126,18 +141,17 @@ let onSubmit = async () => {
     //   把购物车的商品提交到订单详情界面  还没有到提交订单阶段
     //   过滤勾选的商品 传递勾选的商品id 即可  在订单详情界面使用  在查询购物车 获取商品详情
     // 使用 addOrderApi
-    let orderList = cartList.value
-      .filter((item) => {
-        return item.flag == true;
-      })
-      .map((item) => {
-        return item.proid;
-      });
-    // 携带已经勾选商品的id  在订单详情页面 在购物车在查询商品的信息
-    router.push({
-      path: "/orderList",
-      query: { info: JSON.stringify(orderList) },
+    let orderList = cartList.value.filter((item) => {
+      return item.flag == true;
     });
+    // 携带已经勾选商品的id  在订单详情页面 在购物车在查询商品的信息
+    if (orderList.length > 0) {
+      router.push({
+        path: "/order",
+      });
+    } else {
+      showFailToast("请添加商品");
+    }
   } catch (err) {
     showFailToast(err.message);
   }

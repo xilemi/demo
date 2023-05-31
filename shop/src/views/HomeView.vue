@@ -75,7 +75,9 @@
         class="good-list"
       >
         <van-cell v-for="item in list" :key="item.proid" class="item-list">
-          <router-link :to="{ path: '/detail', query: { proid: item.proid } }">
+          <router-link
+            :to="{ path: '/Prodetail', query: { proid: item.proid } }"
+          >
             <img :src="item.img1" alt="" />
             <p>{{ item.proname }}</p>
             <p>{{ item.originprice }}</p>

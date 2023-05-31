@@ -6,3 +6,6 @@ export  const confirmOrderApi= (params) => {
 export  const addOrderApi= (params) => {
     return request.post("/order/addOrder",params)
 }
+export  const updateOrderAddressApi= (params) => {
+    return request.post("/order/updateOrderAddress",params)
+}

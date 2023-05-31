@@ -10,7 +10,7 @@ const router = createRouter({
       name: 'home',
       components: {
         default: HomeView,
-        footer:ComFooter
+        footer: ComFooter
       },
       meta: {
         label: '首页'
@@ -24,7 +24,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       components: {
         default: () => import('../views/ListView.vue'),
-        footer:ComFooter
+        footer: ComFooter
       },
       meta: {
         label: '列表'
@@ -35,7 +35,7 @@ const router = createRouter({
       name: 'car',
       components: {
         default: () => import('../views/CarView.vue'),
-        footer:ComFooter
+        footer: ComFooter
       },
       meta: {
         label: '购物车'
@@ -46,60 +46,84 @@ const router = createRouter({
       name: 'mine',
       components: {
         default: () => import("@/views/MineView.vue"),
-        footer:ComFooter
+        footer: ComFooter
       },
       meta: {
         label: '我的'
       }
     },
     {
-        path: '/register',
-        name: 'register',
-        component: RegisterView,
-        meta: {
-          label: '注册页'
-        }
+      path: '/register',
+      name: 'register',
+      component: RegisterView,
+      meta: {
+        label: '注册页'
+      }
     },
     {
       path: "/login",
       name: 'login',
       component: () => import("@/views/LoginView.vue"),
       meta: {
-        label:"登录页"
+        label: "登录页"
       }
     },
     {
-      path: "/detail",
-      name: 'detail',
-      component:() => import("@/views/DetailView.vue"),
+      path: "/Prodetail",
+      name: 'Prodetail',
+      component: () => import("@/views/ProDetailView.vue"),
       meta: {
-        label:"详情页"
+        label: "详情页"
       }
     },
     {
-      path: "/orderList",
-      name: 'orderList',
+      path: "/order",
+      name: 'order',
       component: () => import("@/views/OrderView.vue"),
       meta: {
-        label:"订单页"
+        label: "订单页"
       }
     },
     {
       path: "/addAddress",
       name: 'addAddress',
-      component:() => import("@/views/AddAddress.vue"),
+      component: () => import("@/views/AddAddress.vue"),
       meta: {
-        label:"添加地址"
+        label: "添加地址"
       }
     },
     {
       path: "/addressList",
       name: 'addressList',
-      component:  () => import("@/views/AddressList.vue"),
+      component: () => import("@/views/AddressList.vue"),
       meta: {
-        label:"地址列表"
+        label: "地址列表"
       }
-    }
+    },
+    {
+      path: "/orderDetail",
+      name: 'orderDetail',
+      component: () => import("@/views/OrderDetail.vue"),
+      meta: {
+        label: "订单详情"
+      }
+    },
+    {
+      path: "/orderList",
+      name: 'orderList',
+      component: () => import("@/views/OrderListView.vue"),
+      meta: {
+        label: "我的订单"
+      }
+    },
+    {
+      path: "/proBrand",
+      name: 'proBrand',
+      component: () => import("@/views/proBrandView.vue"),
+      meta: {
+        label: "品牌产品"
+      }
+    },
   ]
 })
 

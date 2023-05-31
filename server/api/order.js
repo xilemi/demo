@@ -53,7 +53,7 @@ router.post('/updateOrderAddress', (req, res, next) => {
 router.get('/confirmOrder', (req, res, next) => {
   console.log(req.query)
   const { userid, time } = req.query
-  mysql.find(Order, { userid, time }, { _id: 0, __v: 0}).then(data => {
+  mysql.find(Order, { userid,time }, { _id: 0, __v: 0}).then(data => {
     console.log(data)
     // 查询该订单有没有地址信息
     var flag = false

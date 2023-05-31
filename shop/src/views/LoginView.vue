@@ -29,7 +29,6 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import { showSuccessToast, showFailToast } from "vant";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user.js";
 const loginParams = reactive({ loginname: "", password: "" });

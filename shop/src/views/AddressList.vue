@@ -13,14 +13,15 @@
 
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
-import { addressListApi } from "@/api/address.js";
+import { addressListApi, updateAddressApi } from "@/api/address.js";
 import { showFailToast } from "vant";
 import { useUserStore } from "../stores/user";
 import { storeToRefs } from "pinia";
 import { useRouter, useRoute } from "vue-router";
 let list = ref([]);
 let User = useUserStore();
-let { userid } = storeToRefs(User);
+const { getAddressInfo } = User;
+let { userid, addressInfo } = storeToRefs(User);
 const chosenAddressId = ref(0);
 const router = useRouter();
 const route = useRoute();
@@ -36,17 +37,23 @@ const onAdd = () => {
 };
 
 const selectHandler = (item) => {
-  let returnUrl = route.query.returnUrl;
   // 将姓名电话  详细地址传递回去
-  // 一定地调转回订单详细页面吗
-  router.replace(returnUrl);
+  // 一定是调转回订单详细页面吗
+  // 加一个是从那个页面来的  从哪里来就带着item回到那个页面
+  // 点谁 谁就是默认地址 ? 将其他的设置为非默认地址?
+  chosenAddressId.value = item.id;
+  // 选择地址后 如何带回去
+  if (route.query.returnUrl) {
+    router.replace(route.query.returnUrl);
+    getAddressInfo({ address: item, chosenAddressId: chosenAddressId.value });
+  }
 };
 let formatList = (payload) => {
   if (payload) {
     payload = payload.forEach((item, index) => {
       item.address =
         item.province + item.city + item.county + item.addressDetail;
-      item.id = index + 1;
+      item.id = index;
     });
   }
 };
@@ -55,12 +62,18 @@ let addressList = async () => {
     let res = await addressListApi({ userid: userid.value });
     list.value = res.data;
     formatList(list.value);
-    nextTick(() => {
-      // 勾选默认地址?
-      chosenAddressId.value = 1;
+    let index = list.value.findIndex((item) => {
+      return item.isDefault == true;
     });
-    // vant 地址列表 默认勾选 不能选中?
-    console.log(list.value);
+    nextTick(() => {
+      // 没有默认地址 就把 第一个选中
+      if (addressInfo) {
+        chosenAddressId.value = addressInfo.value.chosenAddressId;
+      } else {
+        chosenAddressId.value = index = index == -1 ? 0 : index;
+        getAddressInfo({ address: list.value[index], chosenAddressId: index });
+      }
+    });
   } catch (err) {
     showFailToast(err.message);
   }

@@ -14,6 +14,7 @@ var porApiRouter = require('./api/pro')
 var userApiRouter = require('./api/user')
 var cartApiRouter = require('./api/cart');
 var addressApiRouter = require('./api/Address');
+var rateApiRouter = require('./api/Rate');
 var orderApiRouter = require('./api/order');
 var bannerApiRouter = require('./api/banner');
 var cityApiRouter = require('./api/city');
@@ -82,6 +83,7 @@ app.all('/api/cart/*', (req, res, next) => {
 app.use('/api/pro', porApiRouter)
 app.use('/api/user', userApiRouter)
 app.use('/api/cart', cartApiRouter)
+app.use('/api/rate', rateApiRouter)
 app.use('/api/address', addressApiRouter)
 app.use('/api/order', orderApiRouter)
 app.use('/api/banner', bannerApiRouter)

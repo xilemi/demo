@@ -5,10 +5,22 @@ import ComFooter from "@/components/ComFooter.vue";
 </script>
 
 <template>
-  <ComHeader></ComHeader>
-  <!-- <ComFooter></ComFooter> -->
-  <RouterView />
-  <RouterView name="footer" />
+  <div class="box">
+    <ComHeader class="header"></ComHeader>
+    <!-- <ComFooter></ComFooter> -->
+    <RouterView class="main" />
+    <RouterView name="footer" />
+  </div>
 </template>
 
-<style scoped></style>
+<style lang="scss">
+.box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .main {
+    overflow: scroll;
+  }
+}
+</style>

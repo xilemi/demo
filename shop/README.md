@@ -1,4 +1,5 @@
-# music
+# shop
+## 多人协作 提交代码前必须先拉取远程代码
 
 This template should help get you started developing with Vue 3 in Vite.
 

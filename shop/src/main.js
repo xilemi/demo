@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
 import 'vant/lib/index.css';
+import "vant/es/toast/style";
 import "@/style/reset.css"
 
 import App from './App.vue'
