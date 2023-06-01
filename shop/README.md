@@ -1,42 +1,11 @@
 # shop
-## 多人协作 提交代码前必须先拉取远程代码
+使用vue3+vant+pinia 实现的购物商城
+# 6.1 项目功能基本实现 
+# 存在的问题 
+## 组件化  
+1.购物车列表,订单,订单详情等位置的列表可以复用
+2.地址,在订单,订单详情等页面的选择地址,以及展示地址可以复用
+## 提交订单的地址问题 
+1.后端问题 没有默认地址就会为空  考虑如何解决
 
-This template should help get you started developing with Vue 3 in Vite.
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
