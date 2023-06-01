@@ -21,7 +21,10 @@
       >
     </van-card>
     <van-cell-group>
-      <van-cell title="下单时间" :value="time"></van-cell>
+      <van-cell
+        title="下单时间"
+        :value="dayjs(Number(time)).format('YYYY-MM-DD HH:mm:ss')"
+      ></van-cell>
       <van-cell title="商品总量" :value="totalNum"></van-cell>
       <van-cell title="商品总价" :value="totalPrice"></van-cell>
     </van-cell-group>
@@ -29,8 +32,9 @@
 </template>
 
 <script setup>
+import * as dayjs from "dayjs";
 import { ref, onMounted } from "vue";
-import { confirmOrderApi, updateOrderAddressApi } from "../api/order.js";
+import { confirmOrderApi } from "../api/order.js";
 import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
 import { storeToRefs } from "pinia";
@@ -47,13 +51,13 @@ const address = ref({
   tel: "",
 });
 const getAddress = (payload) => {
-  address.value.name = payload.name;
+  address.value.name = payload[0].name;
   let str =
-    payload.province == payload.city
-      ? payload.city
-      : payload.province + payload.city;
+    payload.province == payload[0].city
+      ? payload[0].city
+      : payload[0].province + payload[0].city;
   address.value.tel =
-    payload.tel + str + payload.county + payload.addressDetail;
+    payload[0].tel + str + payload[0].county + payload[0].addressDetail;
 };
 const getTotalPrice = (payload) => {
   totalPrice.value = payload
@@ -70,7 +74,7 @@ const getTotalNum = (payload) => {
 const getConfirmOrder = async () => {
   let res = await confirmOrderApi({ userid: userid.value, time: time.value });
   orderDetail.value = res.data;
-  getAddress(addressInfo.value.address);
+  getAddress(res.data);
   getTotalPrice(orderDetail.value);
   getTotalNum(orderDetail.value);
   console.log(orderDetail.value);
@@ -84,19 +88,8 @@ const onEidt = async () => {
     },
   });
 };
-const updateOrderAddress = async () => {
-  console.log(addressInfo.value);
-  let res = await updateOrderAddressApi({
-    userid: userid.value,
-    ...addressInfo.value,
-    time: time.value,
-  });
-  getAddress(addressInfo.value);
-  console.log(res);
-};
 onMounted(() => {
   getConfirmOrder();
-  updateOrderAddress();
 });
 </script>
 

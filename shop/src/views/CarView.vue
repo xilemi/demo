@@ -105,7 +105,8 @@ let changeOne = async (cartid, val) => {
 let updateNum = async (cartid, num) => {
   try {
     if (num) {
-      updateNumApi({ cartid, num });
+      let res = await updateNumApi({ cartid, num });
+      showSuccessToast(res.message);
     }
   } catch (err) {
     showFailToast(err.message);

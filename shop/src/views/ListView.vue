@@ -23,11 +23,7 @@
 </template>
 
 <script setup>
-import {
-  proCategoryListApi,
-  proCategoryBrandListApi,
-  proCategoryBrandProListApi,
-} from "@/api/pro.js";
+import { proCategoryListApi, proCategoryBrandListApi } from "@/api/pro.js";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 const categoryList = ref(null);

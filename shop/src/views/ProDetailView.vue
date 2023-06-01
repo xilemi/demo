@@ -10,7 +10,7 @@
       {{ detail.originprice }}
     </van-cell>
     <van-action-bar>
-      <van-action-bar-icon icon="chat-o" text="评价" dot @click="chatPro" />
+      <van-action-bar-icon icon="chat-o" text="评价" dot @click="rate" />
       <van-action-bar-icon icon="cart-o" text="购物车" badge="5" />
       <van-action-bar-icon icon="shop-o" text="店铺" />
       <van-action-bar-button
@@ -47,18 +47,41 @@
             >发表评价</van-button
           >
         </van-space>
+        <van-empty
+          description="暂无评价,请购买后添加评价"
+          v-if="rateList.length == 0"
+        />
+        <div v-else v-for="item in rateList" :key="item.rateid">
+          <van-row>
+            <van-col span="24">{{
+              dayjs(Number(item.time)).format("YYYY-MM-DD HH:mm:ss")
+            }}</van-col>
+          </van-row>
+          <van-row>
+            <van-col span="24">
+              <van-rate
+                v-model="item.grade"
+                style="margin-left: 20px"
+                readonly
+              />
+            </van-col>
+          </van-row>
+          <van-row>
+            <van-col span="24">{{ item.message }}</van-col>
+          </van-row>
+        </div>
       </template>
     </van-popup>
   </div>
 </template>
 
 <script setup>
+import * as dayjs from "dayjs";
 import { proDetailApi } from "@/api/pro.js";
 import { addCartApi } from "@/api/cart.js";
-import { addRateApi } from "@/api/rate.js";
-import { orderListApi } from "@/api/user.js";
+import { addRateApi, listRateApi } from "@/api/rate.js";
 import { showFailToast, showSuccessToast } from "vant";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";
 import { storeToRefs } from "pinia";
@@ -68,7 +91,7 @@ let proid = ref(route.query.proid);
 let detail = ref(null);
 let banner = ref(null);
 let flag = ref(false);
-let isPurchased = ref(false);
+const rateList = ref([]);
 console.log(proid);
 let User = useUserStore();
 let { isLogin, userid } = storeToRefs(User);
@@ -77,6 +100,7 @@ const rateParams = ref({
   proid: proid.value,
   grade: 0,
   message: null,
+  time: "",
 });
 // 获取商品详情
 let proDetail = async () => {
@@ -93,6 +117,8 @@ let proDetail = async () => {
     showFailToast(err.message);
   }
 };
+// 时间格式化
+
 // 添加购物车
 let addCart = async () => {
   // 检查是否登录 登录成功才能添加 否则 跳转登录页写带 returnUrl
@@ -117,27 +143,32 @@ let addCart = async () => {
     });
   }
 };
-// 开启评价  需要购买后才能评价  获取订单 是否include 当前id
-const checekPurchased = async () => {
-  let res = await orderListApi({ userid: userid.value });
-  isPurchased.value =
-    res.data.findIndex((item) => item.proid == proid.value) != -1;
+// 获取评价内容 格式化事件 使用monent
+const getRate = async () => {
+  let res = await listRateApi({ proid: proid.value });
+  rateList.value = res.data;
 };
-const chatPro = () => {
-  if (isPurchased.value) {
-    flag.value = true;
-  }
+const rate = () => {
+  flag.value = true;
 };
+// 添加评价
 const addRate = async () => {
-  let res = await addRateApi(rateParams.value);
-  console.log(res);
-  flag.value = false;
-  rateParams.value.grade = 0;
-  rateParams.value.message = null;
+  try {
+    rateParams.value.time = dayjs().unix();
+    let res = await addRateApi(rateParams.value);
+    console.log(res);
+    // flag.value = false;
+    getRate();
+    rateParams.value.grade = 0;
+    rateParams.value.message = null;
+    showSuccessToast(res.message);
+  } catch (err) {
+    showFailToast(err.message);
+  }
 };
 onMounted(() => {
   proDetail();
-  checekPurchased();
+  getRate();
 });
 </script>
 

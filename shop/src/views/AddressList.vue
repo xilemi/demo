@@ -13,7 +13,8 @@
 
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
-import { addressListApi, updateAddressApi } from "@/api/address.js";
+import { addressListApi } from "@/api/address.js";
+import { updateOrderAddressApi } from "@/api/order.js";
 import { showFailToast } from "vant";
 import { useUserStore } from "../stores/user";
 import { storeToRefs } from "pinia";
@@ -25,6 +26,7 @@ let { userid, addressInfo } = storeToRefs(User);
 const chosenAddressId = ref(0);
 const router = useRouter();
 const route = useRoute();
+const time = ref(route.query.returnUrl);
 const onEdit = (item) => {
   console.log(item);
   router.push({ path: "/addAddress", query: { info: JSON.stringify(item) } });
@@ -35,7 +37,15 @@ const onEdit = (item) => {
 const onAdd = () => {
   router.push("/addAddress");
 };
-
+const updateOrderAddress = async (item) => {
+  console.log(addressInfo.value);
+  let res = await updateOrderAddressApi({
+    userid: userid.value,
+    ...item,
+    time: time.value.match(/\d{1,}/g)[0],
+  });
+  console.log(res);
+};
 const selectHandler = (item) => {
   // 将姓名电话  详细地址传递回去
   // 一定是调转回订单详细页面吗
@@ -44,6 +54,9 @@ const selectHandler = (item) => {
   chosenAddressId.value = item.id;
   // 选择地址后 如何带回去
   if (route.query.returnUrl) {
+    if (route.query.returnUrl.includes("orderDetail")) {
+      updateOrderAddress(item);
+    }
     router.replace(route.query.returnUrl);
     getAddressInfo({ address: item, chosenAddressId: chosenAddressId.value });
   }

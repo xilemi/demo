@@ -6,7 +6,10 @@
       :key="index"
     >
       <van-cell-group inset class="orderBox">
-        <van-cell title="下单时间" :value="time" />
+        <van-cell
+          title="下单时间"
+          :value="dayjs(+time).format('YYYY-MM-DD HH:mm:ss')"
+        />
         <van-card
           v-for="item in orderList.filter((item) => item.time == time)"
           :key="item.proid"
@@ -22,7 +25,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import * as dayjs from "dayjs";
+import { ref, onMounted, handleError } from "vue";
 import { orderListApi } from "../api/user";
 import { useUserStore } from "../stores/user";
 import { storeToRefs } from "pinia";

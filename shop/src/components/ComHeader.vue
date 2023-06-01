@@ -29,6 +29,8 @@ const showPopover = ref(false);
 const router = useRouter();
 const actions = [
   { text: "首页", path: "/" },
+  { text: "登录", path: "/login" },
+  { text: "购物车", path: "/car" },
   { text: "我的订单", path: "/orderList" },
   { text: "我的地址", path: "/addressList" },
 ];
