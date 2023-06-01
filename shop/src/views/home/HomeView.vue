@@ -1,6 +1,9 @@
 <template>
   <div>
-    <ComHeader class="header" title="首页"></ComHeader>
+    <ComHeader class="header" title="首页" :back="false">
+      <van-icon name="arrow-left" />
+      <span>返回</span>
+    </ComHeader>
     <div class="list">
       <van-grid square class="list-grid">
         <van-grid-item icon="photo-o" text="文字">

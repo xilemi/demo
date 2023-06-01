@@ -92,7 +92,7 @@ const router = createRouter({
     {
       path: "/addressList",
       name: 'addressList',
-      component: () => import("@/views/AddressList.vue"),
+      component: () => import("@/views/address/AddressList.vue"),
       meta: {
         label: "地址列表"
       }

@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <van-cell title="商品地址"></van-cell>
     <van-contact-card
       type="edit"

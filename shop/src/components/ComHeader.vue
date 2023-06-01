@@ -1,10 +1,17 @@
 <template>
-  <van-nav-bar
-    :title="props.title"
-    left-text="返回"
-    left-arrow
-    @click-left="onClickLeft"
-  >
+  <van-nav-bar :title="props.title">
+    <!-- template 左边插槽 自定义内容 
+    slot 插槽内再自定义插槽传入的内容
+     -->
+    <template #left>
+      <slot v-if="back">
+        <div @click="router.go(-1)">
+          <van-icon name="arrow-left" />
+          <span>返回</span>
+        </div>
+      </slot>
+    </template>
+
     <template #right>
       <van-popover
         v-model:show="showPopover"
@@ -24,7 +31,6 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-const onClickLeft = () => history.back();
 const showPopover = ref(false);
 const router = useRouter();
 const route = useRoute();
@@ -46,6 +52,10 @@ const actions = [
 ];
 let props = defineProps({
   title: String,
+  back: {
+    type: Boolean,
+    default: true,
+  },
 });
 let onSelect = (item) => {
   router.replace(item.path);

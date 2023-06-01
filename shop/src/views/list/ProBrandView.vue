@@ -1,29 +1,32 @@
 <template>
   <div class="proBrandBox">
-    <router-link
-      :to="{ path: '/Prodetail', query: { proid: item.proid } }"
-      v-for="item in proList"
-      :key="item.proid"
-    >
-      <van-col span="24" class="proBrand">
-        <van-image :src="item.img1" fit="contain" radius="10" />
-        <van-row>
-          <van-text-ellipsis
-            rows="1"
-            :content="item.proname"
-            expand-text="展开"
-            collapse-text="收起"
-            @click-action.prevent=""
-          />
-        </van-row>
-        <van-row gutter="20">
-          <van-col span="6">原价:{{ item.originprice }}</van-col>
-          <van-col span="6" offset="2"
-            >折后:{{ (item.originprice * item.discount) / 10 }}</van-col
-          >
-        </van-row>
-      </van-col>
-    </router-link>
+    <com-header title="品牌商品"></com-header>
+    <div class="proBrandList">
+      <router-link
+        :to="{ path: '/Prodetail', query: { proid: item.proid } }"
+        v-for="item in proList"
+        :key="item.proid"
+      >
+        <van-col span="24" class="proBrand">
+          <van-image :src="item.img1" fit="contain" radius="10" />
+          <van-row>
+            <van-text-ellipsis
+              rows="1"
+              :content="item.proname"
+              expand-text="展开"
+              collapse-text="收起"
+              @click-action.prevent=""
+            />
+          </van-row>
+          <van-row gutter="20">
+            <van-col span="6">原价:{{ item.originprice }}</van-col>
+            <van-col span="6" offset="2"
+              >折后:{{ (item.originprice * item.discount) / 10 }}</van-col
+            >
+          </van-row>
+        </van-col>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -55,8 +58,11 @@ onMounted(() => {
 <style lang="scss" scoped>
 .proBrandBox {
   height: 100%;
-  overflow: scroll;
+
   background-color: #f3f3f3;
+  .proBrandList {
+    overflow: scroll;
+  }
   .proBrand {
     margin: 20px;
     border-radius: 10px;

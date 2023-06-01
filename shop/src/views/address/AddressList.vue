@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ComHeader title="地址列表"></ComHeader>
     <van-address-list
       v-model="chosenAddressId"
       :list="list"
@@ -7,6 +8,7 @@
       @add="onAdd"
       @edit="onEdit"
       @select="selectHandler"
+      class="addressList"
     />
   </div>
 </template>
@@ -19,6 +21,7 @@ import { showFailToast } from "vant";
 import { useUserStore } from "../../stores/user";
 import { storeToRefs } from "pinia";
 import { useRouter, useRoute } from "vue-router";
+import ComHeader from "../../components/ComHeader.vue";
 let list = ref([]);
 let User = useUserStore();
 const { getAddressInfo } = User;
@@ -96,4 +99,8 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.addressList {
+  overflow: scroll;
+}
+</style>
