@@ -2,7 +2,7 @@
   <div>
     <!-- 有默认地址选择默认地址  没有显示添加地址-->
     <ComHeader></ComHeader>
-    <div>
+    <div class="oredrBox">
       <van-contact-card
         type="edit"
         :name="address.name"
@@ -115,4 +115,8 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.oredrBox {
+  overflow: scroll;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+    <ComHeader title="订单详情"></ComHeader>
     <van-cell title="商品地址"></van-cell>
     <van-contact-card
       type="edit"
@@ -39,6 +39,7 @@ import { confirmOrderApi } from "../../api/order.js";
 import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "../../stores/user";
 import { storeToRefs } from "pinia";
+import ComHeader from "../../components/ComHeader.vue";
 const User = useUserStore();
 const { userid, addressInfo } = storeToRefs(User);
 const route = useRoute();

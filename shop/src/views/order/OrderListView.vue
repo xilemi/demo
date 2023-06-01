@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ComHeader></ComHeader>
+    <ComHeader title="我的订单"></ComHeader>
     <div class="orderList">
       <router-link
         :to="{ path: '/orderDetail', query: { time } }"
