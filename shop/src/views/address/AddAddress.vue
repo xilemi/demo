@@ -21,7 +21,7 @@ import {
   updateAddressApi,
   delAddressApi,
 } from "@/api/address.js";
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "../../stores/user";
 import { storeToRefs } from "pinia";
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();

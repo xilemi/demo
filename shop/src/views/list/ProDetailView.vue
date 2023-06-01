@@ -83,7 +83,7 @@ import { addRateApi, listRateApi } from "@/api/rate.js";
 import { showFailToast, showSuccessToast } from "vant";
 import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "../../stores/user";
 import { storeToRefs } from "pinia";
 let router = useRouter();
 let route = useRoute();

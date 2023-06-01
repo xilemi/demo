@@ -34,9 +34,9 @@
 <script setup>
 import * as dayjs from "dayjs";
 import { ref, onMounted } from "vue";
-import { confirmOrderApi } from "../api/order.js";
+import { confirmOrderApi } from "../../api/order.js";
 import { useRoute, useRouter } from "vue-router";
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "../../stores/user";
 import { storeToRefs } from "pinia";
 const User = useUserStore();
 const { userid, addressInfo } = storeToRefs(User);

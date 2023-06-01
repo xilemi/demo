@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/home/HomeView.vue'
 import ComFooter from "@/components/ComFooter.vue"
-import RegisterView from "../views/RegisterView.vue"
+import RegisterView from "../views/login/RegisterView.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -19,11 +19,8 @@ const router = createRouter({
     {
       path: '/list',
       name: 'list',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       components: {
-        default: () => import('../views/ListView.vue'),
+        default: () => import('../views/list/ListView.vue'),
         footer: ComFooter
       },
       meta: {
@@ -34,7 +31,7 @@ const router = createRouter({
       path: '/car',
       name: 'car',
       components: {
-        default: () => import('../views/CarView.vue'),
+        default: () => import('../views/cart/CarView.vue'),
         footer: ComFooter
       },
       meta: {
@@ -45,7 +42,7 @@ const router = createRouter({
       path: '/mine',
       name: 'mine',
       components: {
-        default: () => import("@/views/MineView.vue"),
+        default: () => import("@/views/mine/MineView.vue"),
         footer: ComFooter
       },
       meta: {
@@ -63,7 +60,7 @@ const router = createRouter({
     {
       path: "/login",
       name: 'login',
-      component: () => import("@/views/LoginView.vue"),
+      component: () => import("@/views/login/LoginView.vue"),
       meta: {
         label: "登录页"
       }
@@ -71,7 +68,7 @@ const router = createRouter({
     {
       path: "/Prodetail",
       name: 'Prodetail',
-      component: () => import("@/views/ProDetailView.vue"),
+      component: () => import("@/views/list/ProDetailView.vue"),
       meta: {
         label: "详情页"
       }
@@ -79,7 +76,7 @@ const router = createRouter({
     {
       path: "/order",
       name: 'order',
-      component: () => import("@/views/OrderView.vue"),
+      component: () => import("@/views/order/OrderView.vue"),
       meta: {
         label: "订单页"
       }
@@ -87,7 +84,7 @@ const router = createRouter({
     {
       path: "/addAddress",
       name: 'addAddress',
-      component: () => import("@/views/AddAddress.vue"),
+      component: () => import("@/views/address/AddAddress.vue"),
       meta: {
         label: "添加地址"
       }
@@ -103,7 +100,7 @@ const router = createRouter({
     {
       path: "/orderDetail",
       name: 'orderDetail',
-      component: () => import("@/views/OrderDetail.vue"),
+      component: () => import("@/views/order/OrderDetail.vue"),
       meta: {
         label: "订单详情"
       }
@@ -111,7 +108,7 @@ const router = createRouter({
     {
       path: "/orderList",
       name: 'orderList',
-      component: () => import("@/views/OrderListView.vue"),
+      component: () => import("@/views/order/OrderListView.vue"),
       meta: {
         label: "我的订单"
       }
@@ -119,7 +116,7 @@ const router = createRouter({
     {
       path: "/proBrand",
       name: 'proBrand',
-      component: () => import("@/views/proBrandView.vue"),
+      component: () => import("@/views/list/proBrandView.vue"),
       meta: {
         label: "品牌产品"
       }

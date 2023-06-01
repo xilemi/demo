@@ -16,7 +16,7 @@ import { ref, onMounted, nextTick } from "vue";
 import { addressListApi } from "@/api/address.js";
 import { updateOrderAddressApi } from "@/api/order.js";
 import { showFailToast } from "vant";
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "../../stores/user";
 import { storeToRefs } from "pinia";
 import { useRouter, useRoute } from "vue-router";
 let list = ref([]);

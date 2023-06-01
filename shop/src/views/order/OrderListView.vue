@@ -27,8 +27,8 @@
 <script setup>
 import * as dayjs from "dayjs";
 import { ref, onMounted, handleError } from "vue";
-import { orderListApi } from "../api/user";
-import { useUserStore } from "../stores/user";
+import { orderListApi } from "../../api/user";
+import { useUserStore } from "../../stores/user";
 import { storeToRefs } from "pinia";
 const orderList = ref(null);
 const user = useUserStore();

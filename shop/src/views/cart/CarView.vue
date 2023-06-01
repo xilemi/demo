@@ -1,61 +1,64 @@
 <template>
-  <div class="carBox" v-if="isLogin">
-    <van-swipe-cell v-for="item in cartList" :key="item.proid">
-      <van-checkbox
-        v-model="item.flag"
-        class="checkOne"
-        @change="changeOne(item.cartid, $event)"
-      ></van-checkbox>
-      <van-card
-        :price="(item.originprice * item.discount) / 10"
-        :title="item.proname"
-        class="goods-card"
-        :thumb="item.img1"
-      >
-        <template #num>
-          <van-stepper
-            v-model="item.num"
-            theme="round"
-            button-size="22"
-            disable-input
-            @change="updateNum(item.cartid, item.num)"
+  <div>
+    <ComHeader class="header" title="购物车"></ComHeader>
+    <div class="carBox" v-if="isLogin">
+      <van-swipe-cell v-for="item in cartList" :key="item.proid">
+        <van-checkbox
+          v-model="item.flag"
+          class="checkOne"
+          @change="changeOne(item.cartid, $event)"
+        ></van-checkbox>
+        <van-card
+          :price="(item.originprice * item.discount) / 10"
+          :title="item.proname"
+          class="goods-card"
+          :thumb="item.img1"
+        >
+          <template #num>
+            <van-stepper
+              v-model="item.num"
+              theme="round"
+              button-size="22"
+              disable-input
+              @change="updateNum(item.cartid, item.num)"
+            />
+          </template>
+        </van-card>
+        <template #right>
+          <van-button
+            square
+            text="删除"
+            type="danger"
+            class="delete-button"
+            @click="delCart(item.cartid)"
           />
         </template>
-      </van-card>
-      <template #right>
-        <van-button
-          square
-          text="删除"
-          type="danger"
-          class="delete-button"
-          @click="delCart(item.cartid)"
-        />
-      </template>
-    </van-swipe-cell>
-    <van-submit-bar
-      :price="totalPrice"
-      button-text="提交订单"
-      @submit="onSubmit"
-      class="submitBar"
-    >
-      <van-checkbox v-model="checkAll">全选</van-checkbox>
-    </van-submit-bar>
-  </div>
-  <div v-else>
-    <van-row style="margin-top: 50px">
-      <van-col span="24" style="text-align: center">
-        <van-button
-          type="primary"
-          @click="
-            router.replace({
-              path: '/login',
-              query: { returnUrl: route.fullPath },
-            })
-          "
-          >去登录</van-button
-        >
-      </van-col>
-    </van-row>
+      </van-swipe-cell>
+      <van-submit-bar
+        :price="totalPrice"
+        button-text="提交订单"
+        @submit="onSubmit"
+        class="submitBar"
+      >
+        <van-checkbox v-model="checkAll">全选</van-checkbox>
+      </van-submit-bar>
+    </div>
+    <div class="carBox" v-else>
+      <van-row style="margin-top: 50px">
+        <van-col span="24" style="text-align: center">
+          <van-button
+            type="primary"
+            @click="
+              router.replace({
+                path: '/login',
+                query: { returnUrl: route.fullPath },
+              })
+            "
+            >去登录</van-button
+          >
+        </van-col>
+      </van-row>
+    </div>
   </div>
 </template>
 
@@ -166,6 +169,9 @@ watchEffect(() => {
 </script>
 
 <style lang="scss" scoped>
+.carBox {
+  overflow: scroll;
+}
 .goods-card {
   margin: 0;
   background-color: #fff;
@@ -182,6 +188,6 @@ watchEffect(() => {
   height: 100%;
 }
 .submitBar {
-  margin-bottom: 1rem;
+  margin-bottom: 49px;
 }
 </style>

@@ -1,23 +1,26 @@
 <template>
-  <div class="listBox">
-    <van-sidebar v-model="active" @change="onChange" class="left">
-      <van-sidebar-item
-        :title="item"
-        v-for="(item, index) in categoryList"
-        :key="index"
-      />
-    </van-sidebar>
-    <div>
-      <!-- 需要传 category brand  count limitNum-->
-      <van-space wrap>
-        <van-button
-          type="primary"
-          v-for="(item, index) in categoryBrandList"
+  <div>
+    <ComHeader class="header" title="列表"></ComHeader>
+    <div class="listBox">
+      <van-sidebar v-model="active" @change="onChange" class="left">
+        <van-sidebar-item
+          :title="item"
+          v-for="(item, index) in categoryList"
           :key="index"
-          @click="categoryBrandProList(item.brand, active)"
-          >{{ item.brand }}</van-button
-        >
-      </van-space>
+        />
+      </van-sidebar>
+      <div>
+        <!-- 需要传 category brand  count limitNum-->
+        <van-space wrap>
+          <van-button
+            type="primary"
+            v-for="(item, index) in categoryBrandList"
+            :key="index"
+            @click="categoryBrandProList(item.brand, active)"
+            >{{ item.brand }}</van-button
+          >
+        </van-space>
+      </div>
     </div>
   </div>
 </template>
@@ -61,6 +64,8 @@ onMounted(() => {
 <style lang="scss" scoped>
 .listBox {
   display: flex;
+  height: 100%;
+  overflow: scroll;
   .left {
     flex-shrink: 0;
   }

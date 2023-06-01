@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ComHeader class="header" title="个人中心"></ComHeader>
     <van-row style="height: 180px" align="center">
       <van-col span="24" style="text-align: center" v-if="isLogin"
         >用户名:{{ id }}</van-col
@@ -72,7 +73,7 @@
 </template>
 
 <script setup>
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "../../stores/user";
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";

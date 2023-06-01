@@ -6,7 +6,7 @@ import ComFooter from "@/components/ComFooter.vue";
 
 <template>
   <div class="box">
-    <ComHeader class="header"></ComHeader>
+    <!-- <ComHeader class="header"></ComHeader> -->
     <!-- <ComFooter></ComFooter> -->
     <RouterView class="main" />
     <RouterView name="footer" />
@@ -21,6 +21,8 @@ import ComFooter from "@/components/ComFooter.vue";
   flex-direction: column;
   .main {
     overflow: scroll;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>
