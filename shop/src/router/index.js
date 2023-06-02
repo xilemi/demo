@@ -92,7 +92,7 @@ const router = createRouter({
     {
       path: "/addressList",
       name: 'addressList',
-      component: () => import("@/views/AddressList.vue"),
+      component: () => import("@/views/address/AddressList.vue"),
       meta: {
         label: "地址列表"
       }
@@ -119,6 +119,22 @@ const router = createRouter({
       component: () => import("@/views/list/proBrandView.vue"),
       meta: {
         label: "品牌产品"
+      }
+    },
+    {
+      path: "/search",
+      name: 'search',
+      component: () => import("@/views/search/SearchView.vue"),
+      meta: {
+        label: "搜索"
+      }
+    },
+    {
+      path: "/city",
+      name: 'city',
+      component: () => import("@/views/city/CityView.vue"),
+      meta: {
+        label: "选择城市"
       }
     },
   ]

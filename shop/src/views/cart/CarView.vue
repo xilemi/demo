@@ -1,6 +1,8 @@
 <template>
   <div>
-    <ComHeader class="header" title="购物车"></ComHeader>
+    <ComHeader class="header" title="购物车">
+      <div @click="claerCart">清除购物车</div>
+    </ComHeader>
     <div class="carBox" v-if="isLogin">
       <van-swipe-cell v-for="item in cartList" :key="item.proid">
         <van-checkbox
@@ -9,7 +11,7 @@
           @change="changeOne(item.cartid, $event)"
         ></van-checkbox>
         <van-card
-          :price="(item.originprice * item.discount) / 10"
+          :price="((item.originprice * item.discount) / 10).toFixed(2)"
           :title="item.proname"
           class="goods-card"
           :thumb="item.img1"
@@ -71,6 +73,7 @@ import {
 } from "@/api/cart.js";
 import { computed, ref, watchEffect } from "vue";
 import { useUserStore } from "@/stores/user.js";
+import { claerCartApi } from "@/api/cart.js";
 import { storeToRefs } from "pinia";
 import { showFailToast, showSuccessToast } from "vant";
 import { useRouter, useRoute } from "vue-router";
@@ -82,7 +85,6 @@ let route = useRoute();
 let listCart = async () => {
   try {
     let res = await listCartApi({ userid: userid.value });
-    console.log(res.data, "购物车商品");
     cartList.value = res.data;
   } catch (err) {
     showFailToast(err.message);
@@ -125,6 +127,15 @@ let delCart = async (cartid) => {
     }
     let res = await delCartApi({ cartid });
     showSuccessToast(res.message);
+  } catch (err) {
+    showFailToast(err.message);
+  }
+};
+let claerCart = async () => {
+  try {
+    let res = await claerCartApi({ userid: userid.value });
+    showSuccessToast(res.message);
+    listCart();
   } catch (err) {
     showFailToast(err.message);
   }

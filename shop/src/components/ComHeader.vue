@@ -1,10 +1,19 @@
 <template>
-  <van-nav-bar
-    :title="props.title"
-    left-text="返回"
-    left-arrow
-    @click-left="onClickLeft"
-  >
+  <van-nav-bar>
+    <!-- template 左边插槽 自定义内容 
+    slot 插槽内再自定义插槽传入的内容
+     -->
+    <template #left>
+      <slot v-if="back">
+        <div @click="router.go(-1)">
+          <van-icon name="arrow-left" />
+          <span>返回</span>
+        </div>
+      </slot>
+    </template>
+    <template #title>
+      <slot name="title">{{ title }}</slot>
+    </template>
     <template #right>
       <van-popover
         v-model:show="showPopover"
@@ -24,7 +33,6 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-const onClickLeft = () => history.back();
 const showPopover = ref(false);
 const router = useRouter();
 const route = useRoute();
@@ -32,20 +40,23 @@ const route = useRoute();
 const actions = [
   { text: "首页", path: "/", disabled: route.path == "/" },
   { text: "登录", path: "/login", disabled: route.path == "/login" },
-  { text: "购物车", path: "/car", disabled: route.path == "/car" },
+  {
+    text: "搜索",
+    path: "/search",
+    disabled: route.path == "/search",
+  },
   {
     text: "我的订单",
     path: "/orderList",
     disabled: route.path == "/orderList",
   },
-  {
-    text: "我的地址",
-    path: "/addressList",
-    disabled: route.path == "/addressList",
-  },
 ];
 let props = defineProps({
   title: String,
+  back: {
+    type: Boolean,
+    default: true,
+  },
 });
 let onSelect = (item) => {
   router.replace(item.path);

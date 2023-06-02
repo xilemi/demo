@@ -1,37 +1,40 @@
 <template>
   <div>
     <!-- 有默认地址选择默认地址  没有显示添加地址-->
-    <van-contact-card
-      type="edit"
-      :name="address.name"
-      :tel="
-        address.tel +
-        (address.province == address.city
-          ? address.city
-          : address.province + address.city) +
-        address.county +
-        address.addressDetail
-      "
-      :editable="true"
-      @click="onEdit"
-      v-if="address"
-    />
-    <van-contact-card type="add" @click="onAdd" add-text="添加地址" v-else />
+    <ComHeader></ComHeader>
+    <div class="oredrBox">
+      <van-contact-card
+        type="edit"
+        :name="address.name"
+        :tel="
+          address.tel +
+          (address.province == address.city
+            ? address.city
+            : address.province + address.city) +
+          address.county +
+          address.addressDetail
+        "
+        :editable="true"
+        @click="onEdit"
+        v-if="address"
+      />
+      <van-contact-card type="add" @click="onAdd" add-text="添加地址" v-else />
 
-    <van-card
-      v-for="item in orderList"
-      :key="item.proid"
-      :price="(item.originprice * item.discount) / 10"
-      :title="item.proname"
-      class="goods-card"
-      :thumb="item.img1"
-      :num="item.num"
-    />
-    <van-submit-bar
-      :price="totalPrice"
-      button-text="确认订单"
-      @submit="onSubmit"
-    />
+      <van-card
+        v-for="item in orderList"
+        :key="item.proid"
+        :price="(item.originprice * item.discount) / 10"
+        :title="item.proname"
+        class="goods-card"
+        :thumb="item.img1"
+        :num="item.num"
+      />
+      <van-submit-bar
+        :price="totalPrice"
+        button-text="确认订单"
+        @submit="onSubmit"
+      />
+    </div>
   </div>
 </template>
 
@@ -45,6 +48,7 @@ import { onMounted, ref } from "vue";
 import { useUserStore } from "@/stores/user.js";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
+import ComHeader from "../../components/ComHeader.vue";
 let User = useUserStore();
 let { userid, addressInfo } = storeToRefs(User);
 let route = useRoute();
@@ -111,4 +115,8 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.oredrBox {
+  overflow: scroll;
+}
+</style>

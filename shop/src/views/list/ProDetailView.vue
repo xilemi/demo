@@ -1,5 +1,6 @@
 <template>
   <div class="detail">
+    <com-header title="商品详情"></com-header>
     <van-swipe :autoplay="3000" lazy-render v-if="banner" class="banner">
       <van-swipe-item v-for="image in banner" :key="image">
         <img :src="image" />

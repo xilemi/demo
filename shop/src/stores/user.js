@@ -40,7 +40,11 @@ export const useUserStore = defineStore('user', () => {
       let res = await dofinishloginApi(payload);
       console.log(res.data);
       updateUserInfo(res.data)
-      router.replace(route.query.returnUrl);
+      if (route.query.returnUrl) {
+        router.replace(route.query.returnUrl);
+      } else {
+        router.replace("/mine")
+      }
       showSuccessToast(res.message)
     } catch (err) {
       showFailToast(err.message);

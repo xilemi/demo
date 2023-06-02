@@ -1,5 +1,6 @@
 <template>
   <div>
+    <com-header title="添加地址"></com-header>
     <van-address-edit
       :area-list="areaList"
       show-set-default
