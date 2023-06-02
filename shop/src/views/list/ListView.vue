@@ -1,6 +1,13 @@
 <template>
   <div>
-    <ComHeader class="header" title="列表"></ComHeader>
+    <ComHeader class="header" title="列表">
+      <div @click="router.push('/city')">
+        <span>
+          {{ cityInfo ? cityInfo : "选择城市" }}
+        </span>
+        <van-icon name="arrow-down" />
+      </div>
+    </ComHeader>
     <div class="listBox">
       <van-sidebar v-model="active" @change="onChange" class="left">
         <van-sidebar-item
@@ -28,8 +35,11 @@
 <script setup>
 import { proCategoryListApi, proCategoryBrandListApi } from "@/api/pro.js";
 import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
-const categoryList = ref(null);
+import { useRouter, useRoute } from "vue-router";
+import { useCategoryStore } from "../../stores/category";
+import { storeToRefs } from "pinia";
+const category = useCategoryStore();
+const { categoryList, cityInfo } = storeToRefs(category);
 const categoryBrandList = ref(null);
 const active = ref(0);
 const router = useRouter();

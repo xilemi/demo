@@ -11,7 +11,7 @@
           @change="changeOne(item.cartid, $event)"
         ></van-checkbox>
         <van-card
-          :price="(item.originprice * item.discount) / 10"
+          :price="((item.originprice * item.discount) / 10).toFixed(2)"
           :title="item.proname"
           class="goods-card"
           :thumb="item.img1"

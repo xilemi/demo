@@ -121,6 +121,22 @@ const router = createRouter({
         label: "品牌产品"
       }
     },
+    {
+      path: "/search",
+      name: 'search',
+      component: () => import("@/views/search/SearchView.vue"),
+      meta: {
+        label: "搜索"
+      }
+    },
+    {
+      path: "/city",
+      name: 'city',
+      component: () => import("@/views/city/CityView.vue"),
+      meta: {
+        label: "选择城市"
+      }
+    },
   ]
 })
 
