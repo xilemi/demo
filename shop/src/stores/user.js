@@ -6,13 +6,12 @@ import { showSuccessToast, showFailToast } from "vant";
 export const useUserStore = defineStore('user', () => {
   // 定义数据 需要存储token userid
   const userInfo = reactive({ userid: '', token: "" })
-  const addressInfo = reactive({ address: null, chosenAddressId: null })
+  const addressInfo = ref(null)
   let router = useRouter()
   let route = useRoute()
-  //  获取地址
+  //  
   let getAddressInfo = (payload) => {
-    addressInfo.address = payload.address
-    addressInfo.chosenAddressId = payload.chosenAddressId
+    addressInfo.value = payload
   }
   // 判断登录状态
   let isLogin = computed(() => {

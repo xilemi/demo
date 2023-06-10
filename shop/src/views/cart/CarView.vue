@@ -73,19 +73,23 @@ import {
 } from "@/api/cart.js";
 import { computed, ref, watchEffect } from "vue";
 import { useUserStore } from "@/stores/user.js";
+import { useCartStore } from "../../stores/cart";
 import { claerCartApi } from "@/api/cart.js";
 import { storeToRefs } from "pinia";
 import { showFailToast, showSuccessToast } from "vant";
 import { useRouter, useRoute } from "vue-router";
 let User = useUserStore();
 let { userid, isLogin } = storeToRefs(User);
-let cartList = ref(null);
 let router = useRouter();
 let route = useRoute();
+const Cart = useCartStore();
+const { cartList } = storeToRefs(Cart);
+const { updateCartList } = Cart;
 let listCart = async () => {
   try {
     let res = await listCartApi({ userid: userid.value });
     cartList.value = res.data;
+    updateCartList(res.data);
   } catch (err) {
     showFailToast(err.message);
   }
@@ -134,8 +138,8 @@ let delCart = async (cartid) => {
 let claerCart = async () => {
   try {
     let res = await claerCartApi({ userid: userid.value });
+    cartList.value = null;
     showSuccessToast(res.message);
-    listCart();
   } catch (err) {
     showFailToast(err.message);
   }

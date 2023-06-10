@@ -14,9 +14,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted } from "vue";
 import { addressListApi } from "@/api/address.js";
 import { updateOrderAddressApi } from "@/api/order.js";
+import { getDefaultAddressApi } from "@/api/address.js";
 import { showFailToast } from "vant";
 import { useUserStore } from "../../stores/user";
 import { storeToRefs } from "pinia";
@@ -40,6 +41,11 @@ const onEdit = (item) => {
 const onAdd = () => {
   router.push("/addAddress");
 };
+const resetAddress = async () => {
+  let res = await getDefaultAddressApi({ userid: userid.value });
+  // 如何判断进去选择地址没有
+  addressInfo.value = res.data[0];
+};
 const updateOrderAddress = async (item) => {
   console.log(addressInfo.value);
   let res = await updateOrderAddressApi({
@@ -55,13 +61,16 @@ const selectHandler = (item) => {
   // 加一个是从那个页面来的  从哪里来就带着item回到那个页面
   // 点谁 谁就是默认地址 ? 将其他的设置为非默认地址?
   chosenAddressId.value = item.id;
+  item.isChecked = true;
+  addressInfo.isChecked = false;
+  getAddressInfo(item);
   // 选择地址后 如何带回去
   if (route.query.returnUrl) {
     if (route.query.returnUrl.includes("orderDetail")) {
       updateOrderAddress(item);
+      resetAddress();
     }
     router.replace(route.query.returnUrl);
-    getAddressInfo({ address: item, chosenAddressId: chosenAddressId.value });
   }
 };
 let formatList = (payload) => {
@@ -77,19 +86,27 @@ let addressList = async () => {
   try {
     let res = await addressListApi({ userid: userid.value });
     list.value = res.data;
-    formatList(list.value);
-    let index = list.value.findIndex((item) => {
-      return item.isDefault == true;
-    });
-    nextTick(() => {
-      // 没有默认地址 就把 第一个选中
-      if (addressInfo) {
-        chosenAddressId.value = addressInfo.value.chosenAddressId;
+    // 有地址才有将默认地址选中
+    if (list.value.length) {
+      list.value = list.value.map((item) => {
+        item.isChecked = false;
+        return item;
+      });
+      formatList(list.value);
+      let index = list.value.findIndex((item) => {
+        return item.isDefault == true;
+      });
+      // 每次进来读取
+      if (index != -1) {
+        console.log(1);
+        list.value[index].isChecked = true;
+        chosenAddressId.value = index;
+        getAddressInfo(list.value[index]);
       } else {
-        chosenAddressId.value = index = index == -1 ? 0 : index;
-        getAddressInfo({ address: list.value[index], chosenAddressId: index });
+        chosenAddressId.value = 0;
+        getAddressInfo(list.value[0]);
       }
-    });
+    }
   } catch (err) {
     showFailToast(err.message);
   }

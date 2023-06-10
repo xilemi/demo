@@ -1,7 +1,7 @@
 <template>
   <div>
     <ComHeader class="header" title="个人中心"></ComHeader>
-    <van-row style="height: 180px" align="center">
+    <van-row style="height: 120px" align="center">
       <van-col span="24" style="text-align: center" v-if="isLogin"
         >用户名:{{ id }}</van-col
       >
@@ -22,12 +22,13 @@
     <van-cell-group v-if="isLogin">
       <van-cell title="地址管理" is-link to="/addressList" />
       <van-cell title="订单管理" is-link to="/orderList" />
+      <van-cell title="我的评论" is-link to="/rateList" />
+      <van-cell title="我的点赞" is-link to="/upvoteList" />
       <van-cell title="绑定用户名" is-link @click="change" />
       <van-cell title="修改密码" is-link @click="change" />
       <van-cell title="退出登录" @click="exitAndUpdateUserInfo" />
     </van-cell-group>
     <van-cell title="清除缓存" />
-    <van-cell title="公司介绍" is-link />
     <van-cell title="设置" />
     <van-popup
       v-model:show="showBottom"

@@ -44,4 +44,14 @@ router.get("/listRate", (req, res, next) => {
         })
     })
 })
+router.get("/userListRate", (req, res, next) => {
+    const { userid } = req.query
+    mysql.find(Rate, { userid: userid }, { _id: 0, __v: 0 }).then(data => {
+        res.send({
+            code: 200,
+            message: '获取用户列表成功',
+            data,
+        })
+    })
+})
 module.exports = router

@@ -137,6 +137,22 @@ const router = createRouter({
         label: "选择城市"
       }
     },
+    {
+      path: "/rateList",
+      name: 'rateList',
+      component: () => import("@/views/list/rateList.vue"),
+      meta: {
+        label: "我的评价"
+      }
+    },
+    {
+      path: "/upvoteList",
+      name: 'upvoteList',
+      component: () => import("@/views/list/upvoteList.vue"),
+      meta: {
+        label: "我的点赞"
+      }
+    },
   ]
 })
 

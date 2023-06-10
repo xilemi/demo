@@ -46,9 +46,19 @@ const actions = [
     disabled: route.path == "/search",
   },
   {
+    text: "购物车",
+    path: "/car",
+    disabled: route.path == "/car",
+  },
+  {
     text: "我的订单",
     path: "/orderList",
     disabled: route.path == "/orderList",
+  },
+  {
+    text: "个人中心",
+    path: "/mine",
+    disabled: route.path == "/mine",
   },
 ];
 let props = defineProps({

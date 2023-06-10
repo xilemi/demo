@@ -9,7 +9,7 @@
       </div>
     </ComHeader>
     <div class="listBox">
-      <van-sidebar v-model="active" @change="onChange" class="left">
+      <van-sidebar v-model="activeCategory" @change="onChange" class="left">
         <van-sidebar-item
           :title="item"
           v-for="(item, index) in categoryList"
@@ -23,7 +23,7 @@
             type="primary"
             v-for="(item, index) in categoryBrandList"
             :key="index"
-            @click="categoryBrandProList(item.brand, active)"
+            @click="categoryBrandProList(item.brand, activeCategory)"
             >{{ item.brand }}</van-button
           >
         </van-space>
@@ -39,14 +39,15 @@ import { useRouter, useRoute } from "vue-router";
 import { useCategoryStore } from "../../stores/category";
 import { storeToRefs } from "pinia";
 const category = useCategoryStore();
-const { categoryList, cityInfo } = storeToRefs(category);
+const { updateActiveCategory } = category;
+const { categoryList, cityInfo, activeCategory } = storeToRefs(category);
 const categoryBrandList = ref(null);
-const active = ref(0);
+
 const router = useRouter();
 const proCategoryList = async () => {
   let res = await proCategoryListApi();
   categoryList.value = res.data;
-  proCategoryBrandList(active.value);
+  proCategoryBrandList(activeCategory.value);
   console.log(categoryList.value);
 };
 const proCategoryBrandList = async (index) => {
@@ -57,8 +58,10 @@ const proCategoryBrandList = async (index) => {
   categoryBrandList.value = res.data;
   console.log(res);
 };
-const onChange = () => {
-  proCategoryBrandList(active.value);
+const onChange = (val) => {
+  console.log(1);
+  updateActiveCategory(val);
+  proCategoryBrandList(activeCategory.value);
 };
 const categoryBrandProList = (brand, category) => {
   router.push({
@@ -81,4 +84,4 @@ onMounted(() => {
   }
 }
 </style>
-// 获取所有分类
+// 获取所有分类 选中的分类 应该存储下来

@@ -55,6 +55,5 @@ declare module '@vue/runtime-core' {
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
     VanTextEllipsis: typeof import('vant/es')['TextEllipsis']
-    VanTreeSelect: typeof import('vant/es')['TreeSelect']
   }
 }

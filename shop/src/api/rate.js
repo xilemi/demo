@@ -5,3 +5,6 @@ export const addRateApi = (params) => {
 export const listRateApi = (params) => {
     return request.get("/rate/listRate", { params })
 }
+export const userListRateApi = (params) => {
+    return request.get("/rate/userListRate", { params })
+}

@@ -1,8 +1,4 @@
-<script setup>
-import { RouterLink, RouterView, useRoute } from "vue-router";
-import ComHeader from "@/components/ComHeader.vue";
-import ComFooter from "@/components/ComFooter.vue";
-</script>
+<script setup></script>
 
 <template>
   <div class="box">

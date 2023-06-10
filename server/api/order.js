@@ -25,16 +25,20 @@ const uuid = require('uuid')
  *  }
  */
 router.post('/updateOrderAddress', (req, res, next) => {
-  const { userid, time, name, tel, 
-    province, city, county, addressDetail} = req.body
-    // console.log('2222', req.body)
-  mysql.update(Order, { userid, time }, { $set: { name, tel, 
-    province, city, county,addressDetail} }, 1).then(() => {
-      res.send({
-        code: '200',
-        message: '修改订单的地址'
-      })
+  const { userid, time, name, tel,
+    province, city, county, addressDetail } = req.body
+  // console.log('2222', req.body)
+  mysql.update(Order, { userid, time }, {
+    $set: {
+      name, tel,
+      province, city, county, addressDetail
+    }
+  }, 1).then(() => {
+    res.send({
+      code: '200',
+      message: '修改订单的地址'
     })
+  })
 
 })
 /**
@@ -53,7 +57,7 @@ router.post('/updateOrderAddress', (req, res, next) => {
 router.get('/confirmOrder', (req, res, next) => {
   console.log(req.query)
   const { userid, time } = req.query
-  mysql.find(Order, { userid,time }, { _id: 0, __v: 0}).then(data => {
+  mysql.find(Order, { userid, time }, { _id: 0, __v: 0 }).then(data => {
     console.log(data)
     // 查询该订单有没有地址信息
     var flag = false
@@ -94,11 +98,13 @@ router.get('/confirmOrder', (req, res, next) => {
  *    message: '添加订单'
  *  }
  */
-router.post('/addOrder', (req, res, next) => {
+/* router.post('/addOrder', (req, res, next) => {
+
   const insertData = req.body
   // 以购物车选中的商品为基准值，添加其他的字段
   mysql.find(Cart, { userid: insertData.userid, flag: true },
-    { _id: 0,
+    {
+      _id: 0,
       proid: 1,
       num: 1
     }).then(data => {
@@ -106,8 +112,8 @@ router.post('/addOrder', (req, res, next) => {
       // 遍历数据查询产品的信息
       const arr = []
       data.forEach(item => {
-        arr.push(mysql.find(Product, { proid: item.proid}, { 
-          _id: 0,proid: 1, proname: 1, discount: 1, originprice: 1, img1: 1
+        arr.push(mysql.find(Product, { proid: item.proid }, {
+          _id: 0, proid: 1, proname: 1, discount: 1, originprice: 1, img1: 1
         }))
       })
       Promise.all(arr).then(result => {
@@ -173,13 +179,92 @@ router.post('/addOrder', (req, res, next) => {
               time
             })
           })
-          
+
         })
-        
+
       })
-      
+
+    })
+}) */
+
+// 能把地址带过去的 
+router.post('/addOrder', (req, res, next) => {
+  //携带 userid 和addressid 
+  const insertData = req.body
+  // 必须填写地址
+  // 以购物车选中的商品为基准值，添加其他的字段
+  mysql.find(Cart, { userid: insertData.userid, flag: true },
+    {
+      _id: 0,
+      proid: 1,
+      num: 1
+    }).then(data => {
+      // data  [{proid: '', num: }, {proid: '', num}, { proid: ''}]
+      // 遍历数据查询产品的信息
+      const arr = []
+      data.forEach(item => {
+        arr.push(mysql.find(Product, { proid: item.proid }, {
+          _id: 0, proid: 1, proname: 1, discount: 1, originprice: 1, img1: 1
+        }))
+      })
+      Promise.all(arr).then(result => {
+        // result [[{}], [{}]]
+        const dataarr = []
+        result.forEach(item => {
+          dataarr.push(item[0])
+        })
+        // dataarr [{proid: '', proname: '', discount: '', originprice: '', img1: ''}, {}]
+        // 判断用户有没有默认地址，有的话就把订单的地址设置为默认地址
+
+        // 直接使用地址id进行查询
+        mysql.find(Address, { userid: insertData.userid, addressid: insertData.addressid }).then(data1 => {
+          let obj = {
+            name: data1[0]?.name,
+            tel: data1[0]?.tel,
+            province: data1[0]?.province,
+            city: data1[0]?.city,
+            county: data1[0]?.county,
+            addressDetail: data1[0]?.addressDetail,
+          }
+          const resultarr = []
+          const time = new Date().getTime() + ''
+          // 遍历dataarr 添加其他的数据
+          dataarr.forEach((item, index) => {
+            resultarr.push({
+              name: obj.name,
+              tel: obj.tel,
+              province: obj.province,
+              city: obj.city,
+              county: obj.county,
+              addressDetail: obj.addressDetail,
+              orderid: 'order_' + uuid.v4(),
+              userid: insertData.userid,
+              status: 0,
+              proname: item.proname,
+              proid: item.proid,
+              originprice: item.originprice,
+              img1: item.img1,
+              discount: item.discount,
+              num: data[index].num,
+              time
+            })
+          })
+          // 插入数据
+          mysql.insert(Order, resultarr).then(() => {
+            res.send({
+              code: '200',
+              message: '添加订单',
+              time
+            })
+          })
+
+        })
+
+      })
+
     })
 })
+
 /**
  * @api {get} /api/order/deleteCartItem 支付时删除购物车选中的数据
  * @apiName deleteCartItem
@@ -196,8 +281,20 @@ router.get('/deleteCartItem', (req, res, next) => {
   const { userid } = req.query
   mysql.delete(Cart, { userid, flag: true }, 1).then(() => {
     res.send({
-      code:'200',
+      code: '200',
       message: '支付时删除购物车选中的数据'
+    })
+  })
+})
+
+
+// 删除订单接口  通过  userid 和time 来确定删除的订单 
+router.get('/deleteOrder', (req, res, next) => {
+  const { userid, time } = req.query
+  mysql.delete(Order, { userid, time }, 1).then(() => {
+    res.send({
+      code: '200',
+      message: '删除订单成功'
     })
   })
 })

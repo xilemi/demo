@@ -18,6 +18,7 @@ var rateApiRouter = require('./api/Rate');
 var orderApiRouter = require('./api/order');
 var bannerApiRouter = require('./api/banner');
 var cityApiRouter = require('./api/city');
+var upvoteApiRouter = require('./api/Upvote')
 // admin
 var bannerAdminRouter = require('./admin/banner')
 var statisticAdminRouter = require('./admin/statistic')
@@ -88,6 +89,7 @@ app.use('/api/address', addressApiRouter)
 app.use('/api/order', orderApiRouter)
 app.use('/api/banner', bannerApiRouter)
 app.use('/api/city', cityApiRouter)
+app.use('/api/Upvote', upvoteApiRouter)
 
 app.all('/admin/*', (req, res, next) => {
   const token = req.headers.token || req.query.token || req.body.token

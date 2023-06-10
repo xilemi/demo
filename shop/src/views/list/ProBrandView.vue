@@ -1,6 +1,6 @@
 <template>
   <div class="proBrandBox">
-    <com-header title="品牌商品"></com-header>
+    <com-header :title="route.query.brand"></com-header>
     <div class="proBrandList">
       <router-link
         :to="{ path: '/Prodetail', query: { proid: item.proid } }"
