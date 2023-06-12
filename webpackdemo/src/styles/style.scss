@@ -27,3 +27,17 @@ html , body , div ,  h2{
         font-size: $base_size;
     }
 }
+
+.navlink{
+    a{
+        text-decoration:none ;
+        color: inherit;
+        padding:  0 20px;
+        display: inline-block;
+    }
+}
+.active{
+    color: yellow;
+    background: red;
+  
+}

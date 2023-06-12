@@ -21,6 +21,8 @@ import MyBanner from "./MyBanner.jsx"
 import Dialog from "./Dialog.jsx"
 import "animate.css"
 import Mycomment from "./Mycomment.jsx"
+import ProCom from "./ProCom.jsx"
+import MyApp from "./route/MyApp.jsx"
 class App extends Component {
     constructor() {
         super()
@@ -76,11 +78,13 @@ class App extends Component {
             {/*  <Myrefs></Myrefs>
             <MyLife></MyLife>
             <Mycontext></Mycontext>
-            <Mycontent1></Mycontent1>
             <Myrefs1></Myrefs1> */}
-            {/* <Mycomment></Mycomment> */}
+            {/* <Mycontent1></Mycontent1>
+            <Mycomment></Mycomment> */}
             {/* <MyBanner></MyBanner> */}
-            <Dialog></Dialog>
+            {/* <Dialog></Dialog> */}
+            {/* <ProCom></ProCom> */}
+            <MyApp></MyApp>
         </div >)
     }
 }

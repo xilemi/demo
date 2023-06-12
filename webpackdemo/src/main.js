@@ -36,6 +36,18 @@
 
 import App from './App.jsx'
 import { createRoot } from "react-dom/client"
+import ReduxIndex from './redux/ReduxIndex.jsx'
+import store from './redux/store.js'
+import { render } from 'react-dom'
 const root = createRoot(document.getElementById('app'))  // 根节点 
 
-root.render(<App />)  // 根节点渲染根组件 
+root.render(
+    <ReduxIndex></ReduxIndex>
+    // <App />
+)  // 根节点渲染根组件
+
+store.subscribe(() => {
+    root.render(
+        <ReduxIndex></ReduxIndex>
+    )
+})
