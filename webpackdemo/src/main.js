@@ -36,18 +36,35 @@
 
 import App from './App.jsx'
 import { createRoot } from "react-dom/client"
-import ReduxIndex from './redux/ReduxIndex.jsx'
-import store from './redux/store.js'
+// import ReduxIndex from './redux/ReduxIndex.jsx'
 import { render } from 'react-dom'
+// import { Provider } from 'react-redux'
+// import store from "./ReactRedux/store.js"
+// import store from './rtk/store.js'
 const root = createRoot(document.getElementById('app'))  // 根节点 
-
 root.render(
-    <ReduxIndex></ReduxIndex>
-    // <App />
+    // <ReduxIndex></ReduxIndex>
+    // <Provider store={store}>
+    //     <App />
+    // </Provider>
+    // <Provider {...store}>
+    //     <App />
+    // </Provider>
+
 )  // 根节点渲染根组件
 
-store.subscribe(() => {
-    root.render(
-        <ReduxIndex></ReduxIndex>
-    )
-})
+// store.subscribe(() => {
+//     root.render(
+//         <App></App>
+//     )
+// })
+// saga 
+import SagasIndex from './sagas'
+import { Provider } from 'react-redux'
+import store from './sagas/store/store'
+
+root.render(
+    <Provider store={store}>
+        <SagasIndex />
+    </Provider>
+)

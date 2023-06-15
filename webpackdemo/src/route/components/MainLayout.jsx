@@ -12,8 +12,8 @@ const GetRoute = () => {
         { path: '/findpass', element: <FindPass /> },
         {
             path: '/user', element: <User />, children: [
-                { path: "/user", element: <Navigate to={<Home />} /> },
-                { path: `/user/home/:username?/:passwd?`, element: <Home /> },
+                { path: "/user", element: <Navigate to="/user/home" /> },
+                { path: "/user/home/:username?/:passwd?", element: <Home /> },
                 { path: '/user/list', element: <List /> },
                 { path: '/user/car', element: <Car /> },
                 { path: '/user/mine', element: <Mine /> }
@@ -21,33 +21,20 @@ const GetRoute = () => {
         },
     ])
 }
-const routes = [
-    { path: '/login', element: <Login /> },
-    { path: '/reg', element: <Reg /> },
-    { path: '/findpass', element: <FindPass /> },
-    {
-        path: '/user', element: <User />, children: [
-            { path: "/user", element: <Navigate to={<Home />} /> },
-            { path: `/user/home/:username?/:passwd?`, element: <Home /> },
-            { path: '/user/list', element: <List /> },
-            { path: '/user/car', element: <Car /> },
-            { path: '/user/mine', element: <Mine /> }
-        ]
-    },
-]
+
 
 const GetRoutes = (routes) => {
-    return (routes.map((item, index) => {
+    return routes.map((item, index) => {
         if (item.children) {
             return <Route path={item.path} element={item.element} key={index} >
-                GetRoutes(item.children)
+                {GetRoutes(item.children)}
             </Route>
         } else {
             return <Route path={item.path} element={item.element} key={index} />
         }
-    }))
+    })
 }
-console.log(GetRoutes(routes));
+// console.log(GetRoutes(routes));
 const MainLayout = () => {
     // 主视图内写路由
     return (
@@ -73,12 +60,26 @@ const MainLayout = () => {
             </Routes> */}
             {/* <GetRoute></GetRoute> */}
             <Routes>
-                <GetRoutes></GetRoutes>
+                {GetRoutes(routes)}
             </Routes>
         </div>
     )
 }
 
+const routes = [
+    { path: '/login', element: <Login /> },
+    { path: '/reg', element: <Reg /> },
+    { path: '/findpass', element: <FindPass /> },
+    {
+        path: '/user', element: <User />, children: [
+            { path: "/user", element: <Navigate to="/user/home" /> },
+            { path: "/user/home/:username?/:passwd?", element: <Home /> },
+            { path: '/user/list', element: <List /> },
+            { path: '/user/car', element: <Car /> },
+            { path: '/user/mine', element: <Mine /> }
+        ]
+    },
+]
 
 
 export default MainLayout

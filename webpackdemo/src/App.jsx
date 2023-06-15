@@ -23,6 +23,14 @@ import "animate.css"
 import Mycomment from "./Mycomment.jsx"
 import ProCom from "./ProCom.jsx"
 import MyApp from "./route/MyApp.jsx"
+import { Provider } from "react-redux"
+import store from "../src/ReactRedux/store.js"
+import Mycount from "./ReactRedux/Mycount.jsx"
+import Mobxview from "./mobx/view/Mobxview.jsx"
+import RtkView from "./rtk/view/RtkView.jsx"
+import YieldView from "./yield/view/YieldView.jsx"
+import HooksView from "./hooks/HooksView.jsx"
+import Mycomment1 from "./Mycomment1.jsx"
 class App extends Component {
     constructor() {
         super()
@@ -79,12 +87,18 @@ class App extends Component {
             <MyLife></MyLife>
             <Mycontext></Mycontext>
             <Myrefs1></Myrefs1> */}
-            {/* <Mycontent1></Mycontent1>
-            <Mycomment></Mycomment> */}
+            {/* <Mycontent1></Mycontent1> */}
+            {/* <Mycomment></Mycomment> */}
             {/* <MyBanner></MyBanner> */}
+            {/* <Mycomment1></Mycomment1> */}
             {/* <Dialog></Dialog> */}
             {/* <ProCom></ProCom> */}
-            <MyApp></MyApp>
+            {/* <MyApp></MyApp> */}
+            {/* <Mycount></Mycount> */}
+            {/* <Mobxview></Mobxview> */}
+            {/* <RtkView></RtkView> */}
+            {/* <YieldView></YieldView> */}
+            {/* <HooksView></HooksView> */}
         </div >)
     }
 }

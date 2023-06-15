@@ -5,13 +5,14 @@ import { Component } from "react";
 // 根组件 
 class App extends Component {
   state = {}
-
   // 必须实现
   render() {
     return (
       <div>
         <Header></Header>
-        <Contents></Contents>
+        <Contents>
+
+        </Contents>
         <Footer></Footer>
       </div>
     );

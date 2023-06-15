@@ -41,3 +41,41 @@ html , body , div ,  h2{
     background: red;
   
 }
+
+.title{
+    color:darkmagenta;
+    font-size: 40px;
+}
+
+.subtitle{
+    color:yellowgreen;
+    font-size: 20px;
+}
+.size{
+    font-size: 100px;
+}
+
+.border{
+    border:5px solid #ddd !important;
+}
+
+.btn{
+    border:none;
+    outline:none;
+    padding:10px;
+    margin:10px;
+    border-radius: 6px;
+    cursor: pointer;
+    color:#fff;
+}
+.success{
+    background: #07c160;
+}
+
+.primary{
+    background: #1989fa;
+}
+
+.danger{
+    background: #ff5722;
+}

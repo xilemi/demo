@@ -454,3 +454,38 @@ react的本质工作就是:把数据装换成UI
 函数式组件和类组件的区别？
 1.函数组件没有状态 性能更好 
 2.类组件有生命周期,有this
+
+# redux 总结  
+## redux 使用  
+1.组件通过store.getState() 进行访问数据
+2.组件需要通过store.subscribe()订阅组件render的过程,才能监听到数据更新
+3.在视图页面dispatch到action,action分发到reducer执行对应的操作,视图更新
+4.使用常量,后续只需要在action重新声明常量,在reducer写方法即可
+## react-redux
+1.需要组件通过Provider store={store}进行提供数据,组件才能访问
+2.使用connect高阶函数打通state到props,
+3.使用mapStateToProps进行分发state,后续在组件的props接受即可
+4.使用mapDispatchToProps进行分发操作数据的方法,在组件的props接受即可使用
+5.视图页面使用dispatch,action分发到reducer执行对应的操作,视图更新
+6,使用常量,后续在action继续声明常量,在reducer写方法即可
+## mobx
+1.直接定义数据,使用@observable定义数据,@action定义修改数据的方法,@computed定义计算属性,
+直接打通数据到视图,省去中间的分发环节,导出时  new Data() 
+2.视图页面直接结构Data,拿到对应的数据和方法,添加@observer 让视图能响应数据变化
+
+## redux toolkeit 
+1.创建store 使用configerStore,同样也是将reducer与store进行关联,写在reducer内,在组件上通过Provider store={store}分发
+2.reducer,使用createSlice创建切片, 包含命名空间name,initialState初始化值,reducers同步方法action,异步方法extraReducers
+3.默认导出count.reducer到store中,导出action,使用结构和actions
+4.异步方法使用createAsyncThunk,命名空间方法名(不涉及方法名的引用),异步函数 async ()=>{},在extraReducers:(builder)=> builder 中 添加addCase(方法名.状态)来监听
+5.在视图中使用hooks进行引入, useSelector获取state进行解构获取,useDispatch得到dispatch,进行调用方法
+
+
+## 总结
+从redux,使用subscribe订阅数据变化,getState()获取数据,dispatch操控数据,
+到react-redux简化这一流程,只需要通过provider进行提供,mapStateToProps,mapDispatchToProps进行分发,
+在props内获取.
+到mobx,直接打通数据到视图,简化中间的流程,使用@obserable定义数据,@action定义方法,@observer监听数据变化
+rtk,同样也是将action到reducer的中间环节进行缩减.
+逐渐将流程简化
+
